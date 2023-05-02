@@ -28,7 +28,7 @@ sudo systemctl enable suricata.service
 ```shell!
 sudo systemctl stop suricata.service
 ```
-## Config basic (IDS) <error</error>
+## Config basic (IDS) 
 - Determine network interfaces
 ```shell!
 ip -p -j route show default
@@ -89,7 +89,7 @@ jq 'select(.alert .signature_id==2100498)' /var/log/suricata/eve.json
 ![](https://i.imgur.com/v3hn5uQ.png)
 
 
-## Config IPS
+## Config IPS <ERROR>
 - Include Custom Signatures
 
     + Get Public ipv4
