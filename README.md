@@ -1,8 +1,46 @@
 # Suricata 
 ## Prerequisites
-- Vmware
-- Ubuntu 22.04
-![](https://i.imgur.com/5s8XibI.png)
+- Ubuntu 20.04
+## THUC NGHIEM 
+INSTALL UBUNTU SERVER
+
+```
+sudo add-apt-repository ppa:oisf/suricata-stable
+sudo apt update
+sudo apt install suricata jq nano -y
+
+ip addr 
+sudo nano /etc/suricata/suricata.yaml
+line 589
+
+sudo suricata-update
+
+sudo nano /var/lib/suricata/rules/test.rules
+
+Alert ICMP any any -> $HOME_NET any (msg: "Phat hien Ping"; sid:2; rev:1;)
+
+sudo nano /etc/suricata/suricata.yaml
+line 1925 add test.rules
+
+sudo suricata -T -c /etc/suricata/suricata.yaml -v
+
+![](https://i.imgur.com/FZZA5QZ.png)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Install 
 - Add repository 
@@ -14,7 +52,7 @@ sudo add-apt-repository ppa:oisf/suricata-stable
 - Install via apt
 ```shell
 sudo apt install suricata -y
-sudo apt install jq
+sudo apt install jq -y
 ```
 ![](https://i.imgur.com/2eE7NZy.png)
 
@@ -28,19 +66,21 @@ sudo systemctl enable suricata.service
 ```shell!
 sudo systemctl stop suricata.service
 ```
-## Config basic (IDS) 
+## Config basic (IDS)
 - Determine network interfaces
 ```shell!
 ip -p -j route show default
 ```
-![](https://i.imgur.com/hWRcW7l.png)
+![](https://i.imgur.com/RgKfONO.png)
+
 
 - Edit Suricata's configuration file
 ```shell!
 sudo nano /etc/suricata/suricata.yaml
 ```
 > - Modify interface line
-> ![](https://i.imgur.com/ys33Ipe.png)
+![](https://i.imgur.com/kYnl8mA.png)
+
 
 > - Inspect traffic on additional interfaces insert it before the -interface: default section
 > ![](https://i.imgur.com/qcon87C.png)
@@ -53,7 +93,7 @@ sudo nano /etc/suricata/suricata.yaml
 sudo suricata-update list-sources
 sudo suricata-update
 ```
-- Add rule
+- Add rule slkippp
 ```shell
 sudo suricata-update enable-source tgreen/hunting 
 ```
@@ -89,7 +129,7 @@ jq 'select(.alert .signature_id==2100498)' /var/log/suricata/eve.json
 ![](https://i.imgur.com/v3hn5uQ.png)
 
 
-## Config IPS <ERROR>
+## Config IPS
 - Include Custom Signatures
 
     + Get Public ipv4
@@ -112,7 +152,7 @@ jq 'select(.alert .signature_id==2100498)' /var/log/suricata/eve.json
     ```shell
     sudo nano /etc/suricata/suricata.yaml
     ```
-    + Add local.rules 
+    + Add local.rules  line 1879
     ![](https://i.imgur.com/eliYBZQ.png)
     + Verify config 
     ```shell
@@ -163,3 +203,4 @@ Restart ufw
 ```shell
 sudo systemctl restart ufw.service
 ```
+line 2410
